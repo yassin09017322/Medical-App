@@ -6,6 +6,8 @@ workflows:
     scripts:
       - name: Install dependencies
         script: npm install
+      - name: Fix permissions
+        script: chmod +x node_modules/.bin/cap
       - name: Sync Capacitor
         script: npx cap sync
       - name: Build Android APK
