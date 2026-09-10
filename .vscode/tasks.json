@@ -1,0 +1,38 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Run Preclinical separation audit",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"tools/split-preclinical.js"
+			],
+			"isBackground": false,
+			"problemMatcher": []
+		},
+		{
+			"label": "Backup Preclinical audit inputs",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-NoProfile",
+				"-Command",
+				"Copy-Item -LiteralPath 'www/index.html' -Destination 'www/index.html.preclinical-backup' -Force; Copy-Item -LiteralPath 'tools/split-preclinical.js' -Destination 'tools/split-preclinical.js.preclinical-backup' -Force"
+			],
+			"isBackground": false,
+			"problemMatcher": []
+		},
+		{
+			"label": "Extract CVS data",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-NoProfile",
+				"-Command",
+				"$indexPath='www/index.html'; $cvsPath='www/assets/js/data/cvs.js'; $lines=[System.IO.File]::ReadAllLines($indexPath); $start=[Array]::IndexOf($lines,'    // --- CVS Questions with Subcategories ---'); $end=[Array]::IndexOf($lines,'    // --- GIT Questions with Subcategories ---'); if($start -lt 0 -or $end -le $start){throw 'CVS boundaries not found'}; $cvsLines=@('const CVS_QUESTIONS = [') + $lines[($start+1)..($end-1)] + @('];','','window.CVS_QUESTIONS = CVS_QUESTIONS;'); [System.IO.File]::WriteAllLines($cvsPath,$cvsLines,[System.Text.UTF8Encoding]::new($false)); $remaining=@(); if($start -gt 0){$remaining += $lines[0..($start-1)]}; $remaining += $lines[$end..($lines.Length-1)]; [System.IO.File]::WriteAllLines($indexPath,$remaining,[System.Text.UTF8Encoding]::new($false))"
+			],
+			"isBackground": false
+		}
+	]
+}

@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Medicalist App</string>
+    <string name="title_activity_main">Medicalist App</string>
+    <string name="package_name">com.yassin.medicalist</string>
+    <string name="custom_url_scheme">com.yassin.medicalist</string>
+</resources>
