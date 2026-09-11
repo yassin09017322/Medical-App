@@ -22,7 +22,7 @@
         color: white; margin: 0; padding: 0; min-height: 100vh; overflow-x: hidden;  
     }  
 
-    #welcome-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: inherit; z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 20px; transition: opacity 0.8s; }  
+    #welcome-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: inherit; z-index: 200; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 20px; transition: opacity 0.8s; }  
     .quote-ar { font-size: 18px; line-height: 1.8; color: #e2e8f0; margin-bottom: 20px; font-weight: 600; direction: rtl; }  
     .quote-en { font-size: 15px; line-height: 1.6; color: #94a3b8; margin-bottom: 30px; font-style: italic; }  
     .signature { color: var(--accent); font-weight: bold; margin-bottom: 30px; }  
@@ -31,7 +31,6 @@
     .header { text-align: center; padding: 25px 20px 15px; background: rgba(15, 23, 42, 0.95); border-bottom: 1px solid #334155; position: sticky; top: 0; z-index: 100; }  
     .app-title { font-size: 24px; font-weight: 800; background: linear-gradient(to bottom, #38bdf8, #2dd4bf); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 15px; }  
     
-    /* شارة الملف الشخصي (Profile Badge) */
     .profile-badge { display: none; justify-content: center; align-items: center; gap: 8px; margin: 0 auto 20px auto; background: rgba(30, 41, 59, 0.8); padding: 6px 16px; border-radius: 30px; width: fit-content; border: 1px solid #334155; }
     .profile-badge .avatar { width: 28px; height: 28px; background: #38bdf8; color: #0f172a; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 14px; }
     .profile-badge .name { font-size: 14px; color: #e2e8f0; font-weight: bold; }
@@ -53,9 +52,9 @@
     /* النوافذ المنبثقة */  
     .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.98); z-index: 300; flex-direction: column; justify-content: center; align-items: center; padding: 15px; box-sizing: border-box; }
     
+    #login-modal { z-index: 10000 !important; } 
     #quiz-modal { background: #0f172a; justify-content: flex-start; padding: 0; z-index: 400; }
-    #challenge-modal { z-index: 600; } /* لحل مشكلة التداخل مع الدردشة */
-    #group-modal { z-index: 600; }
+    #challenge-modal, #group-modal, #search-modal { z-index: 600; } 
 
     .quiz-header { padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; background: #1e293b; border-bottom: 1px solid #334155; width: 100%; }  
     .quiz-content { flex: 1; padding: 25px; overflow-y: auto; max-width: 600px; width: 100%; margin: 0 auto; }  
@@ -76,12 +75,14 @@
     .chat-header h3 { margin: 0; color: #38bdf8; font-size: 19px; font-weight: 800; }  
     .chat-back { background: none; border: none; color: #94a3b8; font-size: 24px; cursor: pointer; padding: 0 10px; }  
     .chat-list { flex: 1; overflow-y: auto; padding: 15px; width: 100%; }  
-    .chat-item { display: flex; align-items: center; padding: 15px; background: #1e293b; border-radius: 12px; margin-bottom: 10px; cursor: pointer; border: 1px solid #334155; transition: 0.2s; }  
+    .chat-item { display: flex; align-items: center; padding: 15px; background: #1e293b; border-radius: 12px; margin-bottom: 10px; cursor: pointer; border: 1px solid #334155; transition: 0.2s; position: relative; }  
     .chat-item:active { transform: scale(0.98); }  
     .chat-item .avatar { width: 45px; height: 45px; border-radius: 50%; background: #38bdf8; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 20px; color: #0f172a; margin-right: 12px; flex-shrink: 0; }  
-    .chat-item .info { flex: 1; text-align: left; overflow: hidden; }  
+    .chat-item .info { flex: 1; text-align: left; overflow: hidden; padding-right: 30px; }  
     .chat-item .name { font-weight: bold; color: #f8fafc; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }  
     .chat-item .last-msg { font-size: 13px; color: #94a3b8; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 3px; }  
+    
+    .delete-chat-btn { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); background: rgba(239,68,68,0.1); color: #ef4444; border: none; border-radius: 8px; width: 35px; height: 35px; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 16px; }
 
     .chat-messages { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; scroll-behavior: smooth; background: #0f172a; width: 100%; }  
     .msg-bubble { max-width: 80%; padding: 12px 16px; border-radius: 16px; font-size: 15px; line-height: 1.5; word-wrap: break-word; position: relative; }  
@@ -98,8 +99,6 @@
     .sender-name { font-size: 11px; color: #94a3b8; margin-bottom: 4px; padding: 0 5px; font-weight: bold; }
     
     .msg-ticks { font-size: 12px; font-weight: bold; margin-top: 4px; text-align: left; display: block; }
-    .tick-read { color: #38bdf8; }
-    .tick-sent { color: #cbd5e1; }
 
     .custom-modal-card { background: #1e293b; border-radius: 16px; max-width: 400px; width: 100%; padding: 20px; border: 1px solid #334155; text-align: center; max-height: 85vh; overflow-y: auto; }  
     .custom-input { width: 100%; padding: 12px; background: #0f172a; border: 1px solid #475569; border-radius: 8px; color: white; font-size: 15px; margin-bottom: 10px; box-sizing: border-box; outline: none; }  
@@ -109,7 +108,7 @@
     @keyframes popIn { from { transform: scale(0.9); opacity:0; } to { transform: scale(1); opacity:1; } }  
 </style>  
 
-<!-- تحميل Firebase -->
+<!-- تحميل Firebase بالإصدار المتوافق مع Capacitor (CDN) -->
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 </head>  
@@ -119,7 +118,7 @@
    واجهات المستخدم (UI)
 ========================================= -->
 
-<!-- شاشة الترحيب -->  
+<!-- شاشة الترحيب (تفتح التطبيق فوراً بدون إنترنت) -->  
 <div id="welcome-screen">  
     <div class="welcome-content">  
         <div class="quote-ar">  
@@ -135,18 +134,23 @@
             With regards,<br>Yassin Mohamed Abdelrahman <br>  
             <span style="font-weight: normal; color: #64748b; font-size: 13px;">Faculty of Medicine – Omdurman Islamic University</span>  
         </div>  
-        <button class="enter-btn" onclick="showLogin()">ابدأ الرحلة (Start)</button>  
+        <button class="enter-btn" onclick="window.enterApp()">ابدأ الرحلة (Start)</button>  
     </div>  
 </div>  
 
-<!-- تسجيل الدخول -->  
+<!-- تسجيل الدخول الإجباري الحقيقي (يظهر فقط عند محاولة فتح الدردشة) -->  
 <div id="login-modal" class="modal-overlay">  
     <div class="custom-modal-card">  
         <h2 style="color: #38bdf8; margin: 0 0 10px 0;">👋 أهلاً بك يا دكتور</h2>  
-        <p style="color: #94a3b8; font-size: 13px; margin-bottom: 20px;">أدخل اسمك ليتم التعرف عليك في ساحة التحديات (لا يمكن تغييره وسيكون فريداً لك فقط).</p>  
+        <p style="color: #94a3b8; font-size: 13px; margin-bottom: 20px;">الرجاء حجز اسم مستخدم فريد للدخول إلى ساحة التحديات. (يتطلب إنترنت لأول مرة فقط).</p>  
         <input type="text" id="login-username" class="custom-input" placeholder="اسم المستخدم (مثال: د. يس)" style="text-align: center;">  
-        <div id="login-error" style="color: #ef4444; font-size: 13px; margin-bottom: 10px; display: none;"></div>  
-        <button id="login-submit-btn" onclick="loginUser()" style="width: 100%; padding: 12px; background: #38bdf8; color: #0f172a; border: none; border-radius: 8px; font-weight: bold; font-size: 15px; cursor: pointer;">دخول التطبيق</button>  
+        
+        <!-- لعرض الأخطاء الحقيقية -->
+        <div id="login-error" style="color: #ef4444; font-size: 13px; margin-bottom: 10px; display: none; line-height: 1.5;"></div>  
+        
+        <button id="login-submit-btn" onclick="window.loginUser()" style="width: 100%; padding: 12px; background: #38bdf8; color: #0f172a; border: none; border-radius: 8px; font-weight: bold; font-size: 15px; cursor: pointer;">حجز ودخول الدردشة</button>  
+        <!-- زر إلغاء للعودة للتطبيق لو غير رأيه -->
+        <button onclick="document.getElementById('login-modal').style.display='none'" style="background: none; border: none; color: #64748b; margin-top: 15px; cursor: pointer; text-decoration: underline;">إلغاء والعودة للأسئلة</button>
     </div>  
 </div>  
 
@@ -162,80 +166,80 @@
         </div>
 
         <div class="tabs-container">  
-            <button class="tab-btn active" onclick="switchTab('pre-clinical')">Pre-clinical</button>  
-            <button class="tab-btn" onclick="switchTab('clinical')">Clinical</button>  
-            <button class="tab-btn" onclick="switchTab('srs-section')" style="color: #fbbf24;">🧠 Anki Mode</button>  
+            <button class="tab-btn active" onclick="window.switchTab('pre-clinical')">Pre-clinical</button>  
+            <button class="tab-btn" onclick="window.switchTab('clinical')">Clinical</button>  
+            <button class="tab-btn" onclick="window.switchTab('srs-section')" style="color: #fbbf24;">🧠 Anki Mode</button>  
         </div>  
         <div style="text-align: center; margin-top: 15px;">  
-            <button onclick="openMockModal()" style="background: linear-gradient(90deg, #8b5cf6, #d946ef); color: white; padding: 10px 25px; border-radius: 30px; font-weight: bold; border: none; cursor: pointer; box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4); font-size: 14px;">🚀 بدء امتحان مخصص (Mock Exam)</button>  
+            <button onclick="window.openMockModal()" style="background: linear-gradient(90deg, #8b5cf6, #d946ef); color: white; padding: 10px 25px; border-radius: 30px; font-weight: bold; border: none; cursor: pointer; box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4); font-size: 14px;">🚀 بدء امتحان مخصص (Mock Exam)</button>  
         </div>  
     </div>  
 
     <div id="pre-clinical" class="screen-section active">  
-        <div class="sys-card" style="border: 2px solid #4ade80;" onclick="openCategorySelect('Reproductive')">  
+        <div class="sys-card" style="border: 2px solid #4ade80;" onclick="window.openCategorySelect('Reproductive')">  
             <svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 16c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6zm-1-6.5v4h2v-4h3l-4-4-4 4h3z" fill="#38bdf8"/></svg>  
             <div class="card-title">Reproductive (Free)</div>  
         </div>  
-        <div class="sys-card pro locked-card" onclick="checkPro('Endocrine')">  
+        <div class="sys-card pro locked-card" onclick="window.checkPro('Endocrine')">  
             <svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" fill="#38bdf8"/></svg>  
             <div class="card-title">Endocrine</div><div class="lock-overlay">🔒</div>  
         </div>  
-        <div class="sys-card pro locked-card" onclick="checkPro('Renal')">  
+        <div class="sys-card pro locked-card" onclick="window.checkPro('Renal')">  
             <svg class="icon-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="#38bdf8"/></svg>  
             <div class="card-title">Renal</div><div class="lock-overlay">🔒</div>  
         </div>  
-        <div class="sys-card pro locked-card" onclick="checkPro('CNS')">  
+        <div class="sys-card pro locked-card" onclick="window.checkPro('CNS')">  
             <svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" fill="#38bdf8"/></svg>  
             <div class="card-title">CNS</div><div class="lock-overlay">🔒</div>  
         </div>  
-        <div class="sys-card pro locked-card" onclick="checkPro('CVS')">  
+        <div class="sys-card pro locked-card" onclick="window.checkPro('CVS')">  
             <svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#38bdf8"/></svg>  
             <div class="card-title">CVS</div><div class="lock-overlay">🔒</div>  
         </div>  
-        <div class="sys-card pro locked-card" onclick="checkPro('GIT')">  
+        <div class="sys-card pro locked-card" onclick="window.checkPro('GIT')">  
             <svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#38bdf8"/></svg>  
             <div class="card-title">GIT</div><div class="lock-overlay">🔒</div>  
         </div>  
-        <div class="sys-card pro locked-card" onclick="checkPro('Respiratory')">  
+        <div class="sys-card pro locked-card" onclick="window.checkPro('Respiratory')">  
             <svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="#38bdf8"/></svg>  
             <div class="card-title">Respiratory</div><div class="lock-overlay">🔒</div>  
         </div>  
-        <div class="sys-card pro locked-card" onclick="checkPro('MSK')">  
+        <div class="sys-card pro locked-card" onclick="window.checkPro('MSK')">  
             <svg class="icon-svg" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-6 14h-2v-2h2v2zm0-4h-2V7h2v6z" fill="#38bdf8"/></svg>  
             <div class="card-title">MSK</div><div class="lock-overlay">🔒</div>  
         </div>  
-        <div class="sys-card pro locked-card" onclick="checkPro('Hematology')">  
+        <div class="sys-card pro locked-card" onclick="window.checkPro('Hematology')">  
             <svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 2c-5.33 4.55-8 9.03-8 12.33 0 4.41 3.58 8 8 8s8-3.59 8-8c0-3.3-2.67-7.78-8-12.33z" fill="#38bdf8"/></svg>  
             <div class="card-title">Hematology</div><div class="lock-overlay">🔒</div>  
         </div>  
-        <div class="sys-card pro locked-card" onclick="checkPro('Nutrition')">  
+        <div class="sys-card pro locked-card" onclick="window.checkPro('Nutrition')">  
             <svg class="icon-svg" viewBox="0 0 24 24"><path d="M20 10c0-4.41-3.59-8-8-8s-8 3.59-8 8c0 3.35 2.07 6.22 5 7.41V22h6v-4.59c2.93-1.19 5-4.06 5-7.41z" fill="#38bdf8"/></svg>  
             <div class="card-title">Nutrition</div><div class="lock-overlay">🔒</div>  
         </div>  
     </div>  
 
     <div id="clinical" class="screen-section">  
-        <div class="sys-card pro locked-card" onclick="checkPro('Medicine')">  
+        <div class="sys-card pro locked-card" onclick="window.checkPro('Medicine')">  
             <svg class="icon-svg" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2.5 10H13v3.5h-2V13H7.5v-2H11V7.5h2V11h3.5v2z" fill="#38bdf8"/></svg>  
             <div class="card-title">Internal Medicine</div><div class="lock-overlay">🔒</div>  
         </div>  
-        <div class="sys-card pro locked-card" onclick="checkPro('Surgery')">  
+        <div class="sys-card pro locked-card" onclick="window.checkPro('Surgery')">  
             <svg class="icon-svg" viewBox="0 0 24 24"><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z" fill="#38bdf8"/></svg>  
             <div class="card-title">General Surgery</div><div class="lock-overlay">🔒</div>  
         </div>  
-        <div class="sys-card pro locked-card" onclick="checkPro('Pediatrics')">  
+        <div class="sys-card pro locked-card" onclick="window.checkPro('Pediatrics')">  
             <svg class="icon-svg" viewBox="0 0 24 24"><path d="M20 6h-2.18c.11-.31.18-.65.18-1 0-1.66-1.34-3-3-3-1.05 0-1.96.54-2.5 1.35l-.5.67-.5-.68C10.96 2.54 10.05 2 9 2 7.34 2 6 3.34 6 5c0 .35.07.69.18 1H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-5-2c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zM9 4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm11 15H4v-2h16v2zm0-5H4V8h5.08L7 10.83 8.62 12 11 8.76l1-1.36 1 1.36L15.38 12 17 10.83 14.92 8H20v6z" fill="#38bdf8"/></svg>  
             <div class="card-title">Pediatrics</div><div class="lock-overlay">🔒</div>  
         </div>  
-        <div class="sys-card pro locked-card" onclick="checkPro('OBGYN')">  
+        <div class="sys-card pro locked-card" onclick="window.checkPro('OBGYN')">  
             <svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" fill="#38bdf8"/></svg>  
             <div class="card-title">OB/GYN</div><div class="lock-overlay">🔒</div>  
         </div>  
-        <div class="sys-card pro locked-card" onclick="checkPro('Psychiatry')">  
+        <div class="sys-card pro locked-card" onclick="window.checkPro('Psychiatry')">  
             <svg class="icon-svg" viewBox="0 0 24 24"><path d="M5 9.2h3V19H5zM10.6 5h2.8v14h-2.8zm5.6 8H19v6h-2.8z" fill="#38bdf8"/></svg>  
             <div class="card-title">Psychiatry</div><div class="lock-overlay">🔒</div>  
         </div>  
-        <div class="sys-card pro locked-card" onclick="checkPro('Minors')">  
+        <div class="sys-card pro locked-card" onclick="window.checkPro('Minors')">  
             <svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24 5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" fill="#38bdf8"/></svg>  
             <div class="card-title">Minors (Ophth, ENT...)</div><div class="lock-overlay">🔒</div>  
         </div>  
@@ -384,6 +388,17 @@
     </div>  
 </div>  
 
+<!-- البحث عن طبيب لدردشة جديدة -->
+<div id="search-modal" class="modal-overlay">
+    <div class="custom-modal-card">
+        <h2 style="color: #38bdf8; margin: 0 0 15px 0;">🔍 البحث عن طبيب</h2>
+        <p style="color: #94a3b8; font-size: 13px; margin-bottom: 15px;">أدخل اسم الحساب الخاص بالطبيب كما سجله تماماً للبدء.</p>
+        <input type="text" id="search-peer-input" class="custom-input" placeholder="اسم حساب الطبيب (مثال: د. يس)">
+        <button onclick="window.executePeerSearch()" style="width: 100%; padding: 12px; background: #10b981; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">بحث ومراسلة 🚀</button>
+        <button onclick="document.getElementById('search-modal').style.display='none'" style="background: none; border: none; color: #ef4444; margin-top: 15px; cursor: pointer; text-decoration: underline;">إلغاء</button>
+    </div>
+</div>
+
 <!-- إنشاء مجموعة جديدة -->
 <div id="group-modal" class="modal-overlay">
     <div class="custom-modal-card">
@@ -404,7 +419,7 @@
     </div>
 </div>
 
-<!-- زر الدردشة -->  
+<!-- زر الدردشة (الذي يفتح نافذة التسجيل لأول مرة) -->  
 <div style="position: fixed; bottom: 20px; right: 20px; z-index: 150;">  
     <button onclick="window.openChat()" style="background: linear-gradient(90deg, #10b981, #059669); color: white; width: 65px; height: 65px; border-radius: 50%; border: none; font-size: 28px; box-shadow: 0 10px 25px rgba(16, 185, 129, 0.5); cursor: pointer; transition: 0.3s;">💬</button>  
 </div>  
@@ -421,7 +436,7 @@
 
     <div id="chat-list-view" class="chat-list">  
         <div style="display: flex; gap: 10px; padding: 10px 0;">  
-            <button onclick="window.startNewChat()" style="flex:1; padding:12px; background: #38bdf8; color:#0f172a; border:none; border-radius:30px; font-weight:bold; cursor:pointer;">➕ محادثة</button>  
+            <button onclick="window.showSearchModal()" style="flex:1; padding:12px; background: #38bdf8; color:#0f172a; border:none; border-radius:30px; font-weight:bold; cursor:pointer;">➕ محادثة</button>  
             <button onclick="window.showGroupModal()" style="flex:1; padding:12px; background: #fbbf24; color:#0f172a; border:none; border-radius:30px; font-weight:bold; cursor:pointer;">👥 مجموعة</button>  
         </div>  
         <div class="chat-item" onclick="window.openGlobalChat()" style="background: linear-gradient(90deg, #1e3a8a, #1e293b);">
@@ -26762,6 +26777,7 @@ const allQuestions = [
 
 
 
+
 // ---------- دوال حماية التخزين المحلي ----------  
 function safeGetItem(key) { try { return localStorage.getItem(key); } catch(e) { return null; } }  
 function safeSetItem(key, val) { try { localStorage.setItem(key, val); } catch(e) {} }  
@@ -27202,7 +27218,7 @@ window.onload = function() {
         document.querySelectorAll('.lock-overlay').forEach(el => el.style.display = 'none');  
         document.querySelectorAll('.locked-card').forEach(el => el.classList.remove('locked-card'));  
     }  
-    window.updateProfileBadge(); // تحديث شارة الحساب إن وُجدت
+    window.updateProfileBadge(); 
 };  
 
 // ====================================================================
@@ -27220,8 +27236,10 @@ const firebaseConfig = {
 
 let db = null;
 try {
-    if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
-    db = firebase.firestore();
+    if (typeof firebase !== 'undefined' && firebase.apps) {
+        if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
+        db = firebase.firestore();
+    }
 } catch(e) {
     console.log("Firebase failed to load. Operating offline.");
 }
@@ -27283,21 +27301,21 @@ window.restoreSubscription = function() {
 
 window.checkPro = function(cat) {
     const exp = safeGetItem('pro_expiry_date');
-    if (exp && Date.now() < parseInt(exp)) openCategorySelect(cat);
+    if (exp && Date.now() < parseInt(exp)) window.openCategorySelect(cat);
     else document.getElementById('sub-modal').style.display = 'flex';
 }
 
-// ---------------- دوال تسجيل الدخول للدردشة والمجموعات ----------------
-window.showLogin = function() {
-    const storedName = safeGetItem('chat_user_name');
-    if (storedName) {
-        currentUserName = storedName;
-        document.getElementById('login-modal').style.display = 'none';
-        window.enterApp();
-    } else {
+// ---------------- دوال تسجيل الدخول (نظام حقيقي وإجباري للدردشة فقط) ----------------
+window.openChat = function() {  
+    const storedName = safeGetItem('chat_user_name');  
+    if (!storedName) { 
         document.getElementById('login-modal').style.display = 'flex';
+    } else {
+        currentUserName = storedName;
+        document.getElementById('chat-modal').style.display = 'flex';  
+        window.showChatList();  
     }
-}
+}  
 
 window.loginUser = function() {
     const usernameInput = document.getElementById('login-username').value.trim();
@@ -27305,43 +27323,92 @@ window.loginUser = function() {
     const submitBtn = document.getElementById('login-submit-btn');
 
     if (!usernameInput) { errorDiv.innerText = 'الرجاء إدخال اسم المستخدم.'; errorDiv.style.display = 'block'; return; }
-    if (!db) { finishLogin(usernameInput); return; } 
+    
+    if (!db || !navigator.onLine) { 
+        errorDiv.innerText = '⚠️ يجب الاتصال بالإنترنت لحجز اسمك الفريد في قاعدة البيانات.';
+        errorDiv.style.display = 'block';
+        return; 
+    } 
 
-    submitBtn.innerText = "جاري التحقق...";
+    submitBtn.innerText = "جاري التحقق والحجز...";
     submitBtn.disabled = true;
 
     const normalizedUsername = usernameInput.toLowerCase();
     const userDocRef = db.collection("users").doc(normalizedUsername);
 
+    // التحقق الحقيقي من قاعدة البيانات
     userDocRef.get().then((docSnap) => {
         if (docSnap.exists) {
-            if (docSnap.data().userId === currentUserId) {
-                finishLogin(usernameInput);
+            if (docSnap.data().deviceId === currentUserId) {
+                window.finishLogin(usernameInput); 
             } else {
-                errorDiv.innerText = 'هذا الاسم مستخدم بالفعل! الرجاء اختيار اسم مختلف ليكون معرفاً خاصاً بك.';
+                errorDiv.innerText = '❌ هذا الاسم محجوز بالفعل لطبيب آخر. الرجاء اختيار اسم مختلف.';
                 errorDiv.style.display = 'block';
-                submitBtn.innerText = "دخول التطبيق";
+                submitBtn.innerText = "حجز ودخول الدردشة";
                 submitBtn.disabled = false;
             }
         } else {
+            // تسجيل الاسم كحساب جديد
             userDocRef.set({
                 username: usernameInput,
-                userId: currentUserId,
+                deviceId: currentUserId,
                 createdAt: firebase.firestore.FieldValue.serverTimestamp()
-            }).then(() => { finishLogin(usernameInput); }).catch(() => { finishLogin(usernameInput); });
+            }).then(() => { window.finishLogin(usernameInput); }).catch((error) => { 
+                errorDiv.innerText = 'حدث خطأ: ' + error.message;
+                errorDiv.style.display = 'block';
+                submitBtn.innerText = "حجز ودخول الدردشة";
+                submitBtn.disabled = false;
+            });
         }
-    }).catch(() => { finishLogin(usernameInput); });
+    }).catch((error) => { 
+        errorDiv.innerText = 'حدث خطأ: ' + error.message;
+        errorDiv.style.display = 'block';
+        submitBtn.innerText = "حجز ودخول الدردشة";
+        submitBtn.disabled = false;
+    });
 }
 
-function finishLogin(username) {
+window.finishLogin = function(username) {
     safeSetItem('chat_user_name', username);
     currentUserName = username;
     document.getElementById('login-modal').style.display = 'none';
-    window.enterApp();
+    window.updateProfileBadge();
+    
+    // فتح الدردشة مباشرة بعد التسجيل
+    document.getElementById('chat-modal').style.display = 'flex';  
+    window.showChatList(); 
 }
 
-// ---------------- نظام إنشاء المجموعات ----------------
+// ---------------- نظام البحث وإنشاء المجموعات ----------------
 let pendingGroupMembers = [];
+
+window.showSearchModal = function() {
+    document.getElementById('search-peer-input').value = '';
+    document.getElementById('search-modal').style.display = 'flex';
+};
+
+window.executePeerSearch = function() {
+    const target = document.getElementById('search-peer-input').value.trim();
+    if(!target) return;
+    
+    if(!navigator.onLine || !db) { 
+        alert("يجب الاتصال بالإنترنت للبحث عن الزملاء في قاعدة البيانات!"); 
+        return; 
+    }
+    
+    if (target.toLowerCase() === safeGetItem('chat_user_name').toLowerCase()) { 
+        alert("لا يمكنك الدردشة مع نفسك!"); return; 
+    }
+
+    db.collection("users").doc(target.toLowerCase()).get().then(docSnap => {
+        if(docSnap.exists) {
+            document.getElementById('search-modal').style.display = 'none';
+            window.openChatWith(docSnap.data().username, false);
+        } else {
+            alert("❌ لم يتم العثور على طبيب مسجل بهذا الاسم. تأكد من الحروف بدقة.");
+        }
+    }).catch(e => alert("حدث خطأ أثناء البحث."));
+};
 
 window.showGroupModal = function() {
     const currentUser = safeGetItem('chat_user_name');
@@ -27399,7 +27466,7 @@ window.createGroup = function() {
     }).catch(e => alert("حدث خطأ أثناء إنشاء المجموعة."));
 };
 
-// ---------------- دوال الدردشة والتحديات ----------------
+// ---------------- دوال الدردشة والتحديات والحذف ----------------
 let currentChatId = null;  
 let chatUnsubscribe = null;  
 let currentChatUser = null;  
@@ -27407,12 +27474,41 @@ let currentIsGroupChat = false;
 
 window.getChatId = function(user1, user2) { return [user1.toLowerCase(), user2.toLowerCase()].sort().join('_'); }  
 
-window.openChat = function() {  
-    const storedName = safeGetItem('chat_user_name');  
-    if (!storedName) { window.showLogin(); return; }  
-    document.getElementById('chat-modal').style.display = 'flex';  
-    window.showChatList();  
-}  
+window.deleteChat = function(chatId, e) {
+    e.stopPropagation(); 
+    if(confirm('هل أنت متأكد من حذف هذه الدردشة من قائمتك؟ (سيتم مسحها من جهازك)')) {
+        const currentUser = safeGetItem('chat_user_name');
+        if(!db || !navigator.onLine) { alert("يجب توفر الإنترنت لحذف المحادثة"); return; }
+        
+        db.collection("chats").doc(chatId).update({
+            participants: firebase.firestore.FieldValue.arrayRemove(currentUser.toLowerCase())
+        }).then(() => {
+            window.loadChatList(); 
+        });
+    }
+};
+
+window.renderChatListUI = function(chats) {
+    const container = document.getElementById('chat-list-container');
+    if (chats.length === 0) {  
+        container.innerHTML = `<div class="empty-state"><span>💬</span><p>لا توجد محادثات خاصة أو مجموعات بعد</p><p style="font-size:13px;">ابحث عن زملائك أو أنشئ مجموعة للبدء</p></div>`;  
+        return;  
+    }
+    
+    container.innerHTML = '';  
+    chats.forEach(chat => {  
+        const div = document.createElement('div');  
+        div.className = 'chat-item';  
+        const avatarChar = chat.isGroup ? '👥' : chat.other.charAt(0).toUpperCase();
+        div.innerHTML = `  
+            <div class="avatar" ${chat.isGroup ? 'style="background:#10b981;"' : ''}>${avatarChar}</div>  
+            <div class="info"><div class="name">${chat.other}</div><div class="last-msg">${chat.lastMessage || 'ابدأ المحادثة'}</div></div>  
+            <button class="delete-chat-btn" onclick="window.deleteChat('${chat.chatId}', event)" title="حذف المحادثة">🗑️</button>
+        `;  
+        div.onclick = () => window.openChatWith(chat.isGroup ? chat.chatId : chat.other, chat.isGroup, chat.isGroup ? chat.other : "");  
+        container.appendChild(div);  
+    });  
+}
 
 window.showChatList = function() {  
     document.getElementById('chat-messages-view').style.display = 'none';  
@@ -27426,19 +27522,19 @@ window.showChatList = function() {
 window.loadChatList = function() {  
     const container = document.getElementById('chat-list-container');  
     const currentUser = safeGetItem('chat_user_name');  
-    if (!currentUser || !db) return;  
-    container.innerHTML = '<div style="text-align:center; color:#94a3b8; padding:20px;">جاري التحميل...</div>';  
+    if (!currentUser) return;  
+
+    const cachedList = safeGetItem('local_chats_list');
+    if(cachedList) { window.renderChatListUI(JSON.parse(cachedList)); }
+    else { container.innerHTML = '<div style="text-align:center; color:#94a3b8; padding:20px;">جاري التحميل...</div>'; }
     
+    if(!db) return; 
+
     db.collection("chats").where("participants", "array-contains", currentUser.toLowerCase())
-    .get().then(querySnapshot => {
-        if (querySnapshot.empty) {  
-            container.innerHTML = `<div class="empty-state"><span>💬</span><p>لا توجد محادثات خاصة أو مجموعات بعد</p><p style="font-size:13px;">ابحث عن زملائك أو أنشئ مجموعة للبدء</p></div>`;  
-            return;  
-        }  
+    .onSnapshot(querySnapshot => {
         let chats = [];  
         querySnapshot.forEach(docSnap => {  
             const data = docSnap.data();  
-            
             if (data.isGroup) {
                 chats.push({  
                     chatId: docSnap.id,  
@@ -27460,35 +27556,12 @@ window.loadChatList = function() {
             }
         });  
         chats.sort((a,b) => b.lastTimestamp - a.lastTimestamp);  
-        container.innerHTML = '';  
-        chats.forEach(chat => {  
-            const div = document.createElement('div');  
-            div.className = 'chat-item';  
-            const avatarChar = chat.isGroup ? '👥' : chat.other.charAt(0).toUpperCase();
-            div.innerHTML = `  
-                <div class="avatar" ${chat.isGroup ? 'style="background:#10b981;"' : ''}>${avatarChar}</div>  
-                <div class="info"><div class="name">${chat.other}</div><div class="last-msg">${chat.lastMessage || 'ابدأ المحادثة'}</div></div>  
-            `;  
-            div.onclick = () => window.openChatWith(chat.isGroup ? chat.chatId : chat.other, chat.isGroup, chat.isGroup ? chat.other : "");  
-            container.appendChild(div);  
-        });  
-    }).catch(e => {
-        container.innerHTML = '<div style="color:#ef4444; text-align:center; padding:20px;">فشل تحميل المحادثات. تأكد من الإنترنت.</div>';  
+        
+        safeSetItem('local_chats_list', JSON.stringify(chats));
+        window.renderChatListUI(chats);
+    }, e => {
+        if(!cachedList) container.innerHTML = '<div style="color:#ef4444; text-align:center; padding:20px;">فشل تحميل المحادثات. تأكد من الإنترنت.</div>';  
     });
-}  
-
-window.startNewChat = function() {  
-    const target = prompt("أدخل اسم حساب الطبيب الذي تريد محادثته:");  
-    if (!target || target.trim() === '') return;  
-    const targetName = target.trim();  
-    if (targetName.toLowerCase() === safeGetItem('chat_user_name').toLowerCase()) { alert("لا يمكنك الدردشة مع نفسك!"); return; }  
-    
-    if(!db) {alert("تأكد من اتصالك بالانترنت"); return;}
-
-    db.collection("users").doc(targetName.toLowerCase()).get().then(docSnap => {
-        if (docSnap.exists) { window.openChatWith(docSnap.data().username, false); } 
-        else { alert("هذا الحساب غير موجود. تأكد من الاسم بدقة."); }  
-    }).catch(() => alert("خطأ في البحث."));  
 }  
 
 window.openGlobalChat = function() {
@@ -27524,15 +27597,26 @@ window.openChatWith = function(targetIdOrName, isGroup = false, groupName = "") 
 
 window.loadChatMessages = function(chatId, isGlobal) {  
     const messagesDiv = document.getElementById('chat-messages');  
-    messagesDiv.innerHTML = '<div style="text-align:center; color:#94a3b8; padding:20px;">جاري تحميل الرسائل...</div>';  
+    
+    const cachedMsgs = safeGetItem('local_messages_' + chatId);
+    if(cachedMsgs) {
+        messagesDiv.innerHTML = '';
+        const parsedMsgs = JSON.parse(cachedMsgs);
+        parsedMsgs.forEach(msg => window.renderOrUpdateMsg(msg, isGlobal, true)); 
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    } else {
+        messagesDiv.innerHTML = '<div style="text-align:center; color:#94a3b8; padding:20px;">جاري تحميل الرسائل...</div>';  
+    }
+
     if (chatUnsubscribe) chatUnsubscribe();  
-    if (!db) { messagesDiv.innerHTML = '<div style="color:#ef4444; text-align:center; padding:20px;">خطأ في الاتصال بالدردشة.</div>'; return;}
+    if (!db) return;
 
     let messagesRef = isGlobal 
         ? db.collection("global_chat").orderBy("timestamp", "asc").limit(100) 
         : db.collection("chats").doc(chatId).collection("messages").orderBy("timestamp", "asc");
 
     let initialLoad = true;
+    let localMsgArray = []; 
 
     chatUnsubscribe = messagesRef.onSnapshot((snapshot) => {  
         if (initialLoad) messagesDiv.innerHTML = '';
@@ -27542,26 +27626,29 @@ window.loadChatMessages = function(chatId, isGlobal) {
             const doc = change.doc;
             const msg = { id: doc.id, ...doc.data() };
             
-            // تحديث مؤشرات القراءة ✓✓ في المحادثات الفردية فقط
             if (!isGlobal && !currentIsGroupChat && msg.sender !== currentUser && msg.status !== 'read') {
                 doc.ref.update({ status: 'read' }).catch(e => console.log(e));
             }
 
             if (change.type === 'added' || change.type === 'modified') {
-                window.renderOrUpdateMsg(msg, isGlobal);
+                window.renderOrUpdateMsg(msg, isGlobal, !initialLoad); 
             }
         });
+        
+        localMsgArray = [];
+        snapshot.forEach(docSnap => localMsgArray.push({ id: docSnap.id, ...docSnap.data() }));
+        safeSetItem('local_messages_' + chatId, JSON.stringify(localMsgArray));
 
         if (initialLoad) {
             messagesDiv.scrollTop = messagesDiv.scrollHeight;
             initialLoad = false;
         }
     }, (error) => {  
-        messagesDiv.innerHTML = '<div style="color:#ef4444; text-align:center; padding:20px;">خطأ في الاتصال.</div>';  
+        if(!cachedMsgs) messagesDiv.innerHTML = '<div style="color:#ef4444; text-align:center; padding:20px;">خطأ في الاتصال.</div>';  
     });  
 }  
 
-window.renderOrUpdateMsg = function(msg, isGlobal) {
+window.renderOrUpdateMsg = function(msg, isGlobal, smoothScroll = false) {
     const messagesDiv = document.getElementById('chat-messages');
     const currentUser = safeGetItem('chat_user_name');
     const isMine = msg.sender === currentUser;
@@ -27574,7 +27661,6 @@ window.renderOrUpdateMsg = function(msg, isGlobal) {
     }
 
     let ticks = '';
-    // إظهار مؤشرات القراءة (صحين) في المحادثات الفردية، وصح واحد في المجموعات
     if (isMine && !isGlobal) {
         const tickColor = msg.status === 'read' ? '#38bdf8' : '#94a3b8';
         const tickMarks = (msg.status === 'read' && !currentIsGroupChat) ? '✓✓' : '✓';
@@ -27597,7 +27683,6 @@ window.renderOrUpdateMsg = function(msg, isGlobal) {
             content += `<button class="challenge-btn" onclick="window.acceptRealtimeChallenge('${msg.id}', '${msg.challengeSubject}', '${(msg.questionIndices||[]).join(',')}')">بدء التحدي 🚀</button>`;
         }
 
-        // عرض نتائج الآخرين
         if (msg.scores) {
             for (const [pName, pScore] of Object.entries(msg.scores)) {
                 if (pName !== currentUser) {
@@ -27619,7 +27704,9 @@ window.renderOrUpdateMsg = function(msg, isGlobal) {
 
     if (isNew) {
         messagesDiv.appendChild(bubble);
-        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        if(smoothScroll) {
+            messagesDiv.scrollTo({ top: messagesDiv.scrollHeight, behavior: 'smooth' });
+        }
     }
 };
 
@@ -27640,7 +27727,12 @@ window.sendMessage = function() {
             let displayNames = {};
             displayNames[currentUser.toLowerCase()] = currentUser;
             displayNames[currentChatUser.toLowerCase()] = currentChatUser;
-            chatRef.set({ participants: [currentUser.toLowerCase(), currentChatUser.toLowerCase()], displayNames: displayNames, lastMessage: text, lastTimestamp: firebase.firestore.FieldValue.serverTimestamp() }, {merge: true});  
+            chatRef.set({ 
+                participants: firebase.firestore.FieldValue.arrayUnion(currentUser.toLowerCase(), currentChatUser.toLowerCase()), 
+                displayNames: displayNames, 
+                lastMessage: text, 
+                lastTimestamp: firebase.firestore.FieldValue.serverTimestamp() 
+            }, {merge: true});  
         } else {
             chatRef.update({ lastMessage: text, lastTimestamp: firebase.firestore.FieldValue.serverTimestamp() });
         }
@@ -27694,10 +27786,15 @@ window.sendChallenge = function() {
     } else {
         db.collection("chats").doc(currentChatId).collection("messages").add(payload);
         
+        const chatRef = db.collection("chats").doc(currentChatId);
         if(!currentIsGroupChat){
-            db.collection("chats").doc(currentChatId).set({ lastMessage: `⚔️ تحدي في ${subject}`, lastTimestamp: firebase.firestore.FieldValue.serverTimestamp() }, {merge: true});
+            chatRef.set({ 
+                participants: firebase.firestore.FieldValue.arrayUnion(userName.toLowerCase(), currentChatUser.toLowerCase()), 
+                lastMessage: `⚔️ تحدي في ${subject}`, 
+                lastTimestamp: firebase.firestore.FieldValue.serverTimestamp() 
+            }, {merge: true});
         } else {
-            db.collection("chats").doc(currentChatId).update({ lastMessage: `⚔️ تحدي جماعي في ${subject}`, lastTimestamp: firebase.firestore.FieldValue.serverTimestamp() });
+            chatRef.update({ lastMessage: `⚔️ تحدي جماعي في ${subject}`, lastTimestamp: firebase.firestore.FieldValue.serverTimestamp() });
         }
     }
     document.getElementById('challenge-modal').style.display = 'none';  
