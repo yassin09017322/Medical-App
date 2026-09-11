@@ -61,7 +61,7 @@
     /* النوافذ المنبثقة */  
     .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.98); z-index: 300; flex-direction: column; justify-content: center; align-items: center; padding: 15px; box-sizing: border-box; }
     
-    #login-modal { z-index: 10000 !important; } 
+    #login-modal, #signup-modal { z-index: 10000 !important; } 
     #quiz-modal { background: #0f172a; justify-content: flex-start; padding: 0; z-index: 400; }
     #challenge-modal, #group-modal, #search-modal { z-index: 600; } 
 
@@ -218,19 +218,48 @@ window.updateSRSNotification = function() {
     </div>  
 </div>  
 
-<!-- تسجيل الدخول الإجباري -->  
-<div id="login-modal" class="modal-overlay">  
-    <div class="custom-modal-card">  
-        <h2 style="color: #38bdf8; margin: 0 0 10px 0;">👋 أهلاً بك يا دكتور</h2>  
-        <p style="color: #94a3b8; font-size: 13px; margin-bottom: 20px;">الرجاء حجز اسم مستخدم فريد للدخول إلى ساحة التحديات. (يتطلب إنترنت لأول مرة فقط).</p>  
-        <input type="text" id="login-username" class="custom-input" placeholder="أكتب اسم المستخدم" style="text-align: center;">  
+<!-- نافذة تسجيل الدخول -->
+<div id="login-modal" class="modal-overlay">
+    <div class="custom-modal-card">
+        <h2 style="color: #38bdf8; margin: 0 0 10px 0;">👋 مرحباً بعودتك</h2>
+        <p style="color: #94a3b8; font-size: 13px; margin-bottom: 20px;">قم بتسجيل الدخول للوصول إلى الدردشة والتحديات.</p>
         
-        <div id="login-error" style="color: #ef4444; font-size: 13px; margin-bottom: 10px; display: none; line-height: 1.5;"></div>  
+        <input type="text" id="login-username" class="custom-input" placeholder="اسم المستخدم" style="text-align: center;">
+        <input type="password" id="login-password" class="custom-input" placeholder="كلمة المرور" style="text-align: center;">
         
-        <button id="login-submit-btn" onclick="window.loginUser()" style="width: 100%; padding: 12px; background: #38bdf8; color: #0f172a; border: none; border-radius: 8px; font-weight: bold; font-size: 15px; cursor: pointer;">حجز ودخول الدردشة</button>  
+        <div id="login-error" style="color: #ef4444; font-size: 13px; margin-bottom: 10px; display: none; line-height: 1.5;"></div>
+        
+        <button id="login-submit-btn" onclick="window.loginExistingUser()" style="width: 100%; padding: 12px; background: #38bdf8; color: #0f172a; border: none; border-radius: 8px; font-weight: bold; font-size: 15px; cursor: pointer;">تسجيل الدخول</button>
+        
+        <div style="margin-top: 15px; font-size: 13px; color: #cbd5e1;">
+            ليس لديك حساب؟ <span onclick="window.showSignupModal()" style="color: #10b981; cursor: pointer; font-weight: bold; text-decoration: underline;">إنشاء حساب جديد</span>
+        </div>
+
         <button onclick="document.getElementById('login-modal').style.display='none'" style="width: 100%; padding: 12px; background: #334155; color: #cbd5e1; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 15px; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 15px;"><span style="font-size: 18px;">↩️</span> رجوع للأسئلة</button>
-    </div>  
-</div>  
+    </div>
+</div>
+
+<!-- نافذة إنشاء حساب جديد -->
+<div id="signup-modal" class="modal-overlay">
+    <div class="custom-modal-card">
+        <h2 style="color: #10b981; margin: 0 0 10px 0;">✨ إنشاء حساب جديد</h2>
+        <p style="color: #94a3b8; font-size: 13px; margin-bottom: 20px;">احجز اسم مستخدم فريد وانضم لأطباء التطبيق.</p>
+        
+        <input type="text" id="signup-username" class="custom-input" placeholder="اختر اسم مستخدم" style="text-align: center;">
+        <input type="password" id="signup-password" class="custom-input" placeholder="كلمة المرور" style="text-align: center;">
+        <input type="password" id="signup-password-confirm" class="custom-input" placeholder="تأكيد كلمة المرور" style="text-align: center;">
+        
+        <div id="signup-error" style="color: #ef4444; font-size: 13px; margin-bottom: 10px; display: none; line-height: 1.5;"></div>
+        
+        <button id="signup-submit-btn" onclick="window.createNewUser()" style="width: 100%; padding: 12px; background: #10b981; color: white; border: none; border-radius: 8px; font-weight: bold; font-size: 15px; cursor: pointer;">إنشاء الحساب</button>
+        
+        <div style="margin-top: 15px; font-size: 13px; color: #cbd5e1;">
+            لديك حساب بالفعل؟ <span onclick="window.showLoginModal()" style="color: #38bdf8; cursor: pointer; font-weight: bold; text-decoration: underline;">تسجيل الدخول</span>
+        </div>
+
+        <button onclick="document.getElementById('signup-modal').style.display='none'" style="width: 100%; padding: 12px; background: #334155; color: #cbd5e1; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 15px; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 15px;"><span style="font-size: 18px;">↩️</span> رجوع للأسئلة</button>
+    </div>
+</div>
 
 <!-- التطبيق الرئيسي -->  
 <div id="app-container" style="display:none; opacity:0;">  
@@ -381,7 +410,7 @@ window.updateSRSNotification = function() {
     </div>  
 </div>  
 
-<!-- نافذة الاشتراك وتفعيل الكود السحابي -->  
+<!-- نافذة الاشتراك وتفعيل الكود السحابي المعدلة للإصلاح -->  
 <div id="sub-modal" class="modal-overlay">  
     <div class="custom-modal-card">  
         <h2 style="color: #38bdf8; margin: 0 0 15px 0; font-weight: 800; font-size: 20px;">تفعيل الاشتراك 🔓</h2>  
@@ -507,6 +536,9 @@ window.updateSRSNotification = function() {
         <button class="chat-back" id="chat-back-btn" onclick="window.showChatList()" style="display:none;">←</button>  
         <h3 id="chat-title">التواصل 🌐</h3>  
         <div>  
+            <!-- زر إشعارات الساحة العامة (الطلب الذهبي) -->
+            <button id="global-noti-btn" onclick="window.toggleGlobalNotifications()" style="display:none; background:#0ea5e9; color:#fff; border:none; padding:4px 10px; border-radius:6px; font-weight:bold; margin-right:10px; cursor:pointer; font-size: 12px;">🔕 تفعيل الإشعارات</button>
+            
             <button id="chat-admin-btn" onclick="window.manageGroupRequests()" style="display:none; background:#fbbf24; color:#0f172a; border:none; padding:4px 10px; border-radius:6px; font-weight:bold; margin-right:10px; cursor:pointer; font-size: 12px;">الطلبات 🔔</button>
             <button id="chat-leave-btn" class="leave-btn" onclick="window.leaveCurrentContext()" style="display:none;">خروج</button>
             <button onclick="window.closeChatModalUI()" style="background:none; border:none; color:#94a3b8; font-size:30px; cursor:pointer;">✕</button>  
@@ -514,6 +546,15 @@ window.updateSRSNotification = function() {
     </div>  
 
     <div id="chat-list-view" class="chat-list">  
+        <!-- شريط إدارة الحساب الجديد (تسجيل الخروج والحذف) -->
+        <div style="display: flex; justify-content: space-between; align-items: center; background: #0f172a; padding: 10px 15px; border-radius: 10px; margin-bottom: 15px; border: 1px solid #334155;">
+            <div style="color: #38bdf8; font-weight: bold; font-size: 14px;">👤 <span id="display-account-name">حسابي</span></div>
+            <div style="display: flex; gap: 8px;">
+                <button onclick="window.logoutChat()" style="background: #334155; color: #cbd5e1; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; font-weight: bold;">خروج</button>
+                <button onclick="window.deleteChatAccount()" style="background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid #ef4444; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; font-weight: bold;">حذف</button>
+            </div>
+        </div>
+
         <div class="chat-tabs">
             <button id="tab-private" class="chat-tab-btn active" onclick="window.switchChatTab('private')">👤 خاص</button>
             <button id="tab-groups" class="chat-tab-btn" onclick="window.switchChatTab('groups')">👥 مجموعات</button>
@@ -565,6 +606,7 @@ window.updateSRSNotification = function() {
         <button onclick="document.getElementById('admin-requests-modal').style.display='none'" style="width: 100%; padding: 12px; background: #334155; color: #cbd5e1; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 15px; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 15px;"><span style="font-size: 18px;">↩️</span> رجوع</button>
     </div>
 </div>
+
 <!-- ==================== سكربت التطبيق (المنطق الأساسي) ==================== -->  
 <script>  
 // ---------- البيانات والثوابت ----------  
@@ -26918,6 +26960,9 @@ let currentChallengeMsgId = null;
 let currentUserId = "LOADING..."; 
 let currentUserName = '';  
 
+// متغير إشعارات الساحة العامة (الطلب الذهبي)
+let isGlobalNotificationsEnabled = (safeGetItem('global_notifications') === 'true');
+
 // ---------- دوال التشفير العسكري (End-to-End Encryption) ----------
 window.encryptText = function(text, key) {
     try { return CryptoJS.AES.encrypt(text, key).toString(); } catch(e) { return text; }
@@ -27466,11 +27511,11 @@ window.verifyFirebaseSubscription = function() {
             db.collection("users_pro").doc(currentUserId).set({
                 pro_expiry_date: expiryDate,
                 deviceId: currentUserId
-            }, { merge: true });
-
-            safeSetItem('pro_expiry_date', expiryDate);
-            alert("✅ تم التفعيل بنجاح! التطبيق الآن سيعمل معك بكامل ميزاته وبدون إنترنت.");
-            location.reload();
+            }, { merge: true }).then(() => {
+                safeSetItem('pro_expiry_date', expiryDate);
+                alert("✅ تم التفعيل بنجاح! التطبيق الآن سيعمل معك بكامل ميزاته وبدون إنترنت.");
+                location.reload();
+            });
         });
         
     }).catch((e) => { alert("حدث خطأ أثناء الاتصال بقاعدة البيانات. تأكد من جودة الإنترنت لديك."); });
@@ -27488,7 +27533,37 @@ window.restoreSubscription = function() {
                 alert("✅ تم التعرف على هاتفك واستعادة اشتراكك بنجاح!");
                 location.reload();
             } else { alert("اشتراكك السابق قد انتهت صلاحيته."); }
-        } else { alert("لم نجد اشتراكاً مفصلاً لهذا الهاتف."); }
+        } else { 
+            db.collection("activation_codes").where("deviceId", "==", currentUserId).get().then((querySnapshot) => {
+                if (!querySnapshot.empty) {
+                    let validExpiry = 0;
+                    querySnapshot.forEach((doc) => {
+                        const data = doc.data();
+                        let days = 30;
+                        if(data.plan === 'YEAR') days = 365;
+                        if(data.plan === 'LIFE') days = 36500;
+                        const activationDate = data.activatedAt && typeof data.activatedAt.toMillis === 'function' ? data.activatedAt.toMillis() : Date.now();
+                        const exp = activationDate + (days * 24 * 60 * 60 * 1000);
+                        if (exp > validExpiry) validExpiry = exp;
+                    });
+
+                    if (Date.now() < validExpiry) {
+                        db.collection("users_pro").doc(currentUserId).set({
+                            pro_expiry_date: validExpiry,
+                            deviceId: currentUserId
+                        }, { merge: true }).then(() => {
+                            safeSetItem('pro_expiry_date', validExpiry);
+                            alert("✅ تم العثور على اشتراكك المفقود واستعادته بنجاح!");
+                            location.reload();
+                        });
+                    } else {
+                        alert("اشتراكك السابق قد انتهت صلاحيته.");
+                    }
+                } else {
+                    alert("لم نجد أي اشتراك مفصل أو كود تفعيل سابق لهذا الهاتف.");
+                }
+            });
+        }
     }).catch(() => alert("خطأ في الاتصال بالخادم."));
 }
 
@@ -27498,75 +27573,232 @@ window.checkPro = function(cat) {
     else document.getElementById('sub-modal').style.display = 'flex';
 }
 
-// ---------------- دوال تسجيل الدخول (نظام حقيقي وإجباري للدردشة فقط) ----------------
+// ---------------- دوال تسجيل الدخول وإنشاء الحساب المنفصلة (النسخة المعالجة تماماً) ----------------
 window.openChat = function() {  
     const storedName = safeGetItem('chat_user_name');  
     if (!storedName) { 
-        document.getElementById('login-modal').style.display = 'flex';
+        window.showLoginModal();
     } else {
         currentUserName = storedName;
         document.getElementById('chat-modal').style.display = 'flex';  
         window.showChatList();  
     }
-}  
+}
 
-window.loginUser = function() {
-    const usernameInput = document.getElementById('login-username').value.trim();
-    const errorDiv = document.getElementById('login-error');
-    const submitBtn = document.getElementById('login-submit-btn');
+window.showLoginModal = function() {
+    document.getElementById('signup-modal').style.display = 'none';
+    document.getElementById('login-modal').style.display = 'flex';
+    document.getElementById('login-error').style.display = 'none';
+}
 
-    if (!usernameInput) { errorDiv.innerText = 'الرجاء إدخال اسم المستخدم.'; errorDiv.style.display = 'block'; return; }
-    
-    if (!db || !navigator.onLine) { 
-        errorDiv.innerText = '⚠️ يجب الاتصال بالإنترنت لحجز اسمك الفريد في قاعدة البيانات.';
-        errorDiv.style.display = 'block';
-        return; 
-    } 
+window.showSignupModal = function() {
+    document.getElementById('login-modal').style.display = 'none';
+    document.getElementById('signup-modal').style.display = 'flex';
+    document.getElementById('signup-error').style.display = 'none';
+}
 
-    submitBtn.innerText = "جاري التحقق والحجز...";
-    submitBtn.disabled = true;
+window.loginExistingUser = function() {
+    try {
+        const usernameInput = document.getElementById('login-username').value.trim();
+        const passwordInput = document.getElementById('login-password').value.trim();
+        const errorDiv = document.getElementById('login-error');
+        const submitBtn = document.getElementById('login-submit-btn');
 
-    const normalizedUsername = usernameInput.toLowerCase();
-    const userDocRef = db.collection("users").doc(normalizedUsername);
+        // إخفاء رسائل الخطأ السابقة
+        errorDiv.style.display = 'none';
 
-    userDocRef.get().then((docSnap) => {
-        if (docSnap.exists) {
-            if (docSnap.data().deviceId === currentUserId) {
-                window.finishLogin(usernameInput); 
+        if (!usernameInput || !passwordInput) { 
+            errorDiv.innerText = 'الرجاء إدخال اسم المستخدم وكلمة المرور.'; 
+            errorDiv.style.display = 'block'; 
+            submitBtn.innerText = "تسجيل الدخول";
+            submitBtn.disabled = false;
+            return; 
+        }
+        
+        if (!db || !navigator.onLine) { 
+            errorDiv.innerText = '⚠️ يجب الاتصال بالإنترنت لتسجيل الدخول.';
+            errorDiv.style.display = 'block'; 
+            submitBtn.innerText = "تسجيل الدخول";
+            submitBtn.disabled = false;
+            return; 
+        } 
+
+        // تغيير حالة الزر فقط إذا اجتاز التحقق من البيانات
+        submitBtn.innerText = "جاري التحقق...";
+        submitBtn.disabled = true;
+
+        const normalizedUsername = usernameInput.toLowerCase();
+        const userDocRef = db.collection("users").doc(normalizedUsername);
+
+        userDocRef.get().then((docSnap) => {
+            if (docSnap.exists) {
+                const data = docSnap.data();
+                
+                if (data.password === passwordInput) {
+                    window.finishLogin(usernameInput);
+                    submitBtn.innerText = "تسجيل الدخول";
+                    submitBtn.disabled = false;
+                } 
+                else if (data.deviceId === currentUserId) {
+                    alert("تم إدخال كلمة مرور خاطئة، ولكن تم التعرف على جهازك واستعادة حسابك بنجاح! ✅");
+                    window.finishLogin(usernameInput);
+                    submitBtn.innerText = "تسجيل الدخول";
+                    submitBtn.disabled = false;
+                } 
+                else {
+                    errorDiv.innerText = '❌ كلمة المرور غير صحيحة. لا يمكن استعادة الحساب إلا من نفس الجهاز الذي سُجل به أول مرة.';
+                    errorDiv.style.display = 'block';
+                    submitBtn.innerText = "تسجيل الدخول";
+                    submitBtn.disabled = false;
+                }
             } else {
-                errorDiv.innerText = '❌ هذا الاسم محجوز بالفعل لطبيب آخر. الرجاء اختيار اسم مختلف.';
+                errorDiv.innerText = '❌ الحساب غير موجود. الرجاء إنشاء حساب جديد أولاً.';
                 errorDiv.style.display = 'block';
-                submitBtn.innerText = "حجز ودخول الدردشة";
+                submitBtn.innerText = "تسجيل الدخول";
                 submitBtn.disabled = false;
             }
-        } else {
-            userDocRef.set({
-                username: usernameInput,
-                deviceId: currentUserId,
-                createdAt: firebase.firestore.FieldValue.serverTimestamp()
-            }).then(() => { window.finishLogin(usernameInput); }).catch((error) => { 
-                errorDiv.innerText = 'حدث خطأ: ' + error.message;
-                errorDiv.style.display = 'block';
-                submitBtn.innerText = "حجز ودخول الدردشة";
-                submitBtn.disabled = false;
-            });
+        }).catch((error) => { 
+            errorDiv.innerText = 'حدث خطأ في الاتصال بالإنترنت.';
+            errorDiv.style.display = 'block';
+            submitBtn.innerText = "تسجيل الدخول";
+            submitBtn.disabled = false;
+        });
+    } catch (e) {
+        console.error(e);
+        document.getElementById('login-submit-btn').innerText = "تسجيل الدخول";
+        document.getElementById('login-submit-btn').disabled = false;
+    }
+}
+
+window.createNewUser = function() {
+    try {
+        const usernameInput = document.getElementById('signup-username').value.trim();
+        const passwordInput = document.getElementById('signup-password').value.trim();
+        const confirmPassword = document.getElementById('signup-password-confirm').value.trim();
+        const errorDiv = document.getElementById('signup-error');
+        const submitBtn = document.getElementById('signup-submit-btn');
+
+        // إخفاء رسائل الخطأ السابقة
+        errorDiv.style.display = 'none';
+
+        if (!usernameInput || !passwordInput || !confirmPassword) { 
+            errorDiv.innerText = 'الرجاء تعبئة جميع الحقول.'; 
+            errorDiv.style.display = 'block'; 
+            submitBtn.innerText = "إنشاء الحساب";
+            submitBtn.disabled = false;
+            return; 
         }
-    }).catch((error) => { 
-        errorDiv.innerText = 'حدث خطأ: ' + error.message;
-        errorDiv.style.display = 'block';
-        submitBtn.innerText = "حجز ودخول الدردشة";
-        submitBtn.disabled = false;
-    });
+
+        if (passwordInput !== confirmPassword) {
+            errorDiv.innerText = '❌ كلمتا المرور غير متطابقتين.'; 
+            errorDiv.style.display = 'block'; 
+            submitBtn.innerText = "إنشاء الحساب";
+            submitBtn.disabled = false;
+            return; 
+        }
+
+        if (passwordInput.length < 6) {
+            errorDiv.innerText = '❌ كلمة المرور يجب أن تتكون من 6 أحرف أو أرقام على الأقل.'; 
+            errorDiv.style.display = 'block'; 
+            submitBtn.innerText = "إنشاء الحساب";
+            submitBtn.disabled = false;
+            return; 
+        }
+        
+        if (!db || !navigator.onLine) { 
+            errorDiv.innerText = '⚠️ يجب الاتصال بالإنترنت لإنشاء حساب.';
+            errorDiv.style.display = 'block'; 
+            submitBtn.innerText = "إنشاء الحساب";
+            submitBtn.disabled = false;
+            return; 
+        } 
+
+        // تغيير حالة الزر فقط إذا اجتاز التحقق
+        submitBtn.innerText = "جاري إنشاء الحساب...";
+        submitBtn.disabled = true;
+
+        const normalizedUsername = usernameInput.toLowerCase();
+        const userDocRef = db.collection("users").doc(normalizedUsername);
+
+        userDocRef.get().then((docSnap) => {
+            if (docSnap.exists) {
+                errorDiv.innerText = '❌ هذا الاسم محجوز بالفعل لطبيب آخر. الرجاء اختيار اسم مختلف.';
+                errorDiv.style.display = 'block';
+                submitBtn.innerText = "إنشاء الحساب";
+                submitBtn.disabled = false;
+            } else {
+                userDocRef.set({
+                    username: usernameInput,
+                    password: passwordInput,
+                    deviceId: currentUserId,
+                    joinedGlobalChat: false,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                }).then(() => { 
+                    window.finishLogin(usernameInput); 
+                    submitBtn.innerText = "إنشاء الحساب";
+                    submitBtn.disabled = false;
+                }).catch((error) => { 
+                    errorDiv.innerText = 'حدث خطأ: ' + error.message;
+                    errorDiv.style.display = 'block';
+                    submitBtn.innerText = "إنشاء الحساب";
+                    submitBtn.disabled = false;
+                });
+            }
+        }).catch((error) => { 
+            errorDiv.innerText = 'حدث خطأ في الاتصال بالإنترنت.';
+            errorDiv.style.display = 'block';
+            submitBtn.innerText = "إنشاء الحساب";
+            submitBtn.disabled = false;
+        });
+    } catch (e) {
+        console.error(e);
+        document.getElementById('signup-submit-btn').innerText = "إنشاء الحساب";
+        document.getElementById('signup-submit-btn').disabled = false;
+    }
 }
 
 window.finishLogin = function(username) {
     safeSetItem('chat_user_name', username);
     currentUserName = username;
-    document.getElementById('login-modal').style.display = 'none';
-    window.updateProfileBadge();
     
+    document.getElementById('login-modal').style.display = 'none';
+    document.getElementById('signup-modal').style.display = 'none';
+    
+    document.getElementById('login-username').value = '';
+    document.getElementById('login-password').value = '';
+    document.getElementById('signup-username').value = '';
+    document.getElementById('signup-password').value = '';
+    document.getElementById('signup-password-confirm').value = '';
+    
+    window.updateProfileBadge();
     document.getElementById('chat-modal').style.display = 'flex';  
     window.showChatList(); 
+}
+
+window.logoutChat = function() {
+    if (confirm("هل أنت متأكد من تسجيل الخروج؟ ستحتاج لإدخال كلمة المرور للعودة.")) {
+        safeRemoveItem('chat_user_name'); 
+        currentUserName = '';
+        document.getElementById('chat-modal').style.display = 'none';
+        document.getElementById('user-profile-badge').style.display = 'none';
+    }
+}
+
+window.deleteChatAccount = function() {
+    if (confirm("تحذير نهائي ⚠️\nهل أنت متأكد من حذف حسابك بشكل دائم؟ سيتم مسح اسمك من قاعدة البيانات ولن تتمكن من قراءة رسائلك القديمة.")) {
+        const currentUser = safeGetItem('chat_user_name');
+        if (!currentUser || !db) return;
+        
+        db.collection("users").doc(currentUser.toLowerCase()).delete().then(() => {
+            safeRemoveItem('chat_user_name');
+            currentUserName = '';
+            alert("تم حذف حسابك بنجاح من قاعدة البيانات.");
+            document.getElementById('chat-modal').style.display = 'none';
+            document.getElementById('user-profile-badge').style.display = 'none';
+        }).catch(e => {
+            alert("حدث خطأ أثناء الحذف. تأكد من جودة الإنترنت.");
+        });
+    }
 }
 
 // ---------------- نظام البحث وإنشاء المجموعات ----------------
@@ -27680,7 +27912,7 @@ window.createGroup = function() {
     }).catch(e => alert("حدث خطأ أثناء إنشاء المجموعة."));
 };
 
-// ---------------- دوال الدردشة والتحديات الجديدة ----------------
+// ---------------- دوال الدردشة والتحديات ----------------
 let currentChatId = null;  
 let chatUnsubscribe = null;  
 let currentChatUser = null;  
@@ -27716,6 +27948,8 @@ window.switchChatTab = function(tabName) {
 }
 
 window.showChatList = function() {  
+    document.getElementById('display-account-name').innerText = safeGetItem('chat_user_name') || 'حسابي';
+
     if (chatUnsubscribe) { chatUnsubscribe(); chatUnsubscribe = null; }  
     currentChatId = null;
     
@@ -27724,12 +27958,12 @@ window.showChatList = function() {
     document.getElementById('chat-back-btn').style.display = 'none';  
     document.getElementById('chat-leave-btn').style.display = 'none';
     document.getElementById('chat-admin-btn').style.display = 'none';
+    document.getElementById('global-noti-btn').style.display = 'none';
     document.getElementById('chat-title').innerText = 'التواصل 🌐';  
     
     window.switchChatTab(currentChatTab);
 }  
 
-// 🔥 تم تعديل هذه الدالة لتراقب وتُرسل إشعارات الرسائل الجديدة 
 window.loadChatList = function() {  
     if(!db) return;
     const currentUser = safeGetItem('chat_user_name');  
@@ -27857,9 +28091,15 @@ window.renderSuggestedGroups = function(groups) {
 }
 
 window.joinGlobalChat = function() {
-    safeSetItem('joined_global_chat_v2', 'true');
-    window.openGlobalChat(); 
-    window.loadChatList(); 
+    const currentUser = safeGetItem('chat_user_name');
+    if(!db || !currentUser) return;
+    
+    db.collection("users").doc(currentUser.toLowerCase()).update({
+        joinedGlobalChat: true
+    }).then(() => {
+        window.openGlobalChat(); 
+        window.loadChatList();
+    });
 }
 
 window.leaveCurrentContext = function(forceType = null) {
@@ -27868,13 +28108,37 @@ window.leaveCurrentContext = function(forceType = null) {
     
     if (confirm("هل أنت متأكد من الخروج النهائي؟ لن تصلك أي رسائل جديدة.")) {
         if (type === 'global') {
-            safeRemoveItem('joined_global_chat_v2'); 
-            window.showChatList();
+            db.collection("users").doc(currentUser.toLowerCase()).update({
+                joinedGlobalChat: false
+            }).then(() => window.showChatList());
         } else if (type === 'group' && currentChatId) {
             db.collection("chats").doc(currentChatId).update({
                 participants: firebase.firestore.FieldValue.arrayRemove(currentUser.toLowerCase())
             }).then(() => window.showChatList());
         }
+    }
+}
+
+// ---------------- زر إشعارات الساحة العامة ----------------
+window.toggleGlobalNotifications = function() {
+    isGlobalNotificationsEnabled = !isGlobalNotificationsEnabled;
+    safeSetItem('global_notifications', isGlobalNotificationsEnabled ? 'true' : 'false');
+    window.updateGlobalNotiBtnUI();
+    if(isGlobalNotificationsEnabled) {
+        alert("✅ تم تفعيل إشعارات الساحة العامة. ستصلك تنبيهات عند وصول رسائل جديدة.");
+    } else {
+        alert("🔕 تم إيقاف إشعارات الساحة العامة.");
+    }
+}
+
+window.updateGlobalNotiBtnUI = function() {
+    const btn = document.getElementById('global-noti-btn');
+    if(isGlobalNotificationsEnabled) {
+        btn.innerText = "🔔 إيقاف الإشعارات";
+        btn.style.background = "#10b981";
+    } else {
+        btn.innerText = "🔕 تفعيل الإشعارات";
+        btn.style.background = "#0ea5e9";
     }
 }
 
@@ -27926,6 +28190,11 @@ window.openGlobalChat = function() {
     document.getElementById('chat-back-btn').style.display = 'block'; 
     document.getElementById('chat-leave-btn').style.display = 'none'; 
     document.getElementById('chat-admin-btn').style.display = 'none';
+    
+    // إظهار وتحديث زر إشعارات الساحة
+    document.getElementById('global-noti-btn').style.display = 'block';
+    window.updateGlobalNotiBtnUI();
+
     document.getElementById('chat-title').innerText = "الساحة العامة 🌍";  
     window.loadChatMessages(currentChatId, true); 
 }
@@ -27935,6 +28204,8 @@ window.openChatWith = function(targetIdOrName, isGroup = false, groupName = "", 
     if (!currentUser) return;  
     
     currentIsGroupChat = isGroup;
+    document.getElementById('global-noti-btn').style.display = 'none'; // إخفاء زر إشعارات الساحة
+
     if (isGroup) {
         currentChatId = targetIdOrName;
         currentChatUser = groupName;
@@ -27987,8 +28258,8 @@ window.loadChatMessages = function(chatId, isGlobal) {
             if (change.type === 'added' || change.type === 'modified') {
                 window.renderOrUpdateMsg(msg, isGlobal, !initialLoad); 
                 
-                // إشعار فوري وأنت داخل الساحة العامة
-                if (change.type === 'added' && !initialLoad && msg.sender !== currentUser && isGlobal) {
+                // إشعارات الساحة العامة مخصصة بناءً على خيار المستخدم
+                if (change.type === 'added' && !initialLoad && msg.sender !== currentUser && isGlobal && isGlobalNotificationsEnabled) {
                     AppNotifications.notifyNow("الساحة العامة 🌍", `رسالة جديدة من ${msg.sender}`);
                 }
             }
